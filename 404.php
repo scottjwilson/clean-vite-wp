@@ -26,7 +26,7 @@ get_header(); ?>
                     <?php esc_html_e(
                         "Back to Home",
                         "clean-vite-wp",
-                    ); ?> <?php echo clean_vite_wp_icon("arrow-right"); ?>
+                    ); ?> <?php echo cvw_icon("arrow-right"); ?>
                 </a>
             </div>
         </div>

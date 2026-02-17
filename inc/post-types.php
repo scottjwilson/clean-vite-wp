@@ -6,7 +6,7 @@
  *
  * Example:
  *
- * function clean_vite_wp_register_post_types(): void {
+ * function cvw_register_post_types(): void {
  *     register_post_type('example', [
  *         'labels' => [
  *             'name' => __('Examples', 'clean-vite-wp'),
@@ -19,5 +19,5 @@
  *         'show_in_rest' => true,
  *     ]);
  * }
- * add_action('init', 'clean_vite_wp_register_post_types');
+ * add_action('init', 'cvw_register_post_types');
  */

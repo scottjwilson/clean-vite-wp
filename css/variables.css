@@ -1,16 +1,17 @@
 /*
- * Fieldcraft Digital 2.0
+ * Clean Vite WP
  * Design System Variables
  */
 
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap");
+/* Uncomment or replace with your project's fonts */
+/* @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"); */
 
 :root {
     /* ========================================
        COLOR SYSTEM
        ======================================== */
 
-    /* Primary - Deep Violet */
+    /* Primary */
     --color-primary-50: #f5f3ff;
     --color-primary-100: #ede9fe;
     --color-primary-200: #ddd6fe;
@@ -23,7 +24,7 @@
     --color-primary-900: #4c1d95;
     --color-primary-950: #2e1065;
 
-    /* Dark - Rich Navy for backgrounds */
+    /* Dark */
     --color-dark-50: #f8fafc;
     --color-dark-100: #f1f5f9;
     --color-dark-200: #e2e8f0;
@@ -36,16 +37,11 @@
     --color-dark-900: #0f172a;
     --color-dark-950: #020617;
 
-    /* Accent - Electric Cyan */
+    /* Accent */
     --color-accent-300: #67e8f9;
     --color-accent-400: #22d3ee;
     --color-accent-500: #06b6d4;
     --color-accent-600: #0891b2;
-
-    /* Secondary Accent - Warm Coral */
-    --color-coral-300: #fca5a5;
-    --color-coral-400: #f87171;
-    --color-coral-500: #ef4444;
 
     /* Success */
     --color-success-400: #4ade80;
@@ -67,10 +63,10 @@
        TYPOGRAPHY
        ======================================== */
 
-    --font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-    --font-body: "Inter", system-ui, -apple-system, sans-serif;
+    --font-display: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
-    /* Font Sizes - Fluid Typography */
+    /* Font Sizes */
     --text-xs: 0.75rem;
     --text-sm: 0.875rem;
     --text-base: 1rem;
@@ -154,7 +150,6 @@
     --shadow-glow-primary: 0 0 40px -10px var(--color-primary-500);
     --shadow-glow-accent: 0 0 40px -10px var(--color-accent-500);
 
-    /* Card shadows */
     --shadow-card: 0 4px 20px rgb(0 0 0 / 0.06);
     --shadow-card-hover: 0 12px 40px rgb(0 0 0 / 0.12);
 
@@ -186,14 +181,4 @@
     --z-modal-backdrop: 400;
     --z-modal: 500;
     --z-tooltip: 600;
-}
-
-/* Dark mode support (optional) */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-bg: var(--color-dark-950);
-        --color-surface: var(--color-dark-900);
-        --color-text: var(--color-dark-100);
-        --color-text-muted: var(--color-dark-400);
-    }
 }

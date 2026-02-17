@@ -1,9 +1,11 @@
 <?php
 /**
- * Vite Integration for Fieldcraft Digital 2.0
+ * Clean Vite WP - Vite Integration
  *
  * Handles Vite dev server detection and asset loading for both
  * development (HMR) and production (manifest-based) environments.
+ *
+ * @package Clean_Vite_WP
  */
 
 /**
@@ -11,7 +13,7 @@
  *
  * @return array{running: bool, base: string, server: string}
  */
-function fieldcraft_detect_vite_server(): array
+function cvw_detect_vite_server(): array
 {
     $vite_server = "http://localhost:3000";
 
@@ -42,9 +44,11 @@ function fieldcraft_detect_vite_server(): array
         return ["running" => true, "base" => "/", "server" => $vite_server];
     }
 
-    // Try with theme base path
+    // Try with theme base path (dynamically resolved)
+    $theme_slug = get_template();
+    $theme_base = "/wp-content/themes/" . $theme_slug . "/";
     $client_response = @wp_remote_get(
-        $vite_server . "/wp-content/themes/fieldcraftdigital2/@vite/client",
+        $vite_server . $theme_base . "@vite/client",
         [
             "timeout" => 1,
             "sslverify" => false,
@@ -58,7 +62,7 @@ function fieldcraft_detect_vite_server(): array
     ) {
         return [
             "running" => true,
-            "base" => "/wp-content/themes/fieldcraftdigital2/",
+            "base" => $theme_base,
             "server" => $vite_server,
         ];
     }
@@ -71,7 +75,7 @@ function fieldcraft_detect_vite_server(): array
  *
  * @return bool
  */
-function fieldcraft_is_local_environment(): bool
+function cvw_is_local_environment(): bool
 {
     $home_url = home_url();
     return strpos($home_url, "localhost") !== false ||
@@ -83,11 +87,11 @@ function fieldcraft_is_local_environment(): bool
 /**
  * Output Vite client scripts in head for HMR
  */
-function fieldcraft_output_vite_scripts(): void
+function cvw_output_vite_scripts(): void
 {
-    $vite = fieldcraft_detect_vite_server();
+    $vite = cvw_detect_vite_server();
 
-    if (!$vite["running"] && !fieldcraft_is_local_environment()) {
+    if (!$vite["running"] && !cvw_is_local_environment()) {
         return;
     }
 
@@ -104,14 +108,14 @@ function fieldcraft_output_vite_scripts(): void
         '"></script>' .
         "\n";
 }
-add_action("wp_head", "fieldcraft_output_vite_scripts", 1);
+add_action("wp_head", "cvw_output_vite_scripts", 1);
 
 /**
  * Load Vite assets from manifest in production
  */
-function fieldcraft_load_vite_production_assets(): void
+function cvw_load_vite_production_assets(): void
 {
-    $vite = fieldcraft_detect_vite_server();
+    $vite = cvw_detect_vite_server();
 
     if ($vite["running"]) {
         return;
@@ -136,7 +140,7 @@ function fieldcraft_load_vite_production_assets(): void
         foreach ($entry["css"] as $index => $css_file) {
             $css_path = get_theme_file_path("dist/" . $css_file);
             wp_enqueue_style(
-                "fieldcraft-vite-style-" . $index,
+                "cvw-vite-style-" . $index,
                 get_theme_file_uri("dist/" . $css_file),
                 [],
                 file_exists($css_path) ? filemtime($css_path) : null,
@@ -147,14 +151,14 @@ function fieldcraft_load_vite_production_assets(): void
     // Enqueue JS
     $js_path = get_theme_file_path("dist/" . $entry["file"]);
     wp_enqueue_script(
-        "fieldcraft-vite-main",
+        "cvw-vite-main",
         get_theme_file_uri("dist/" . $entry["file"]),
         [],
         file_exists($js_path) ? filemtime($js_path) : null,
         true,
     );
 }
-add_action("wp_enqueue_scripts", "fieldcraft_load_vite_production_assets", 100);
+add_action("wp_enqueue_scripts", "cvw_load_vite_production_assets", 100);
 
 /**
  * Add type="module" attribute to Vite scripts
@@ -164,12 +168,12 @@ add_action("wp_enqueue_scripts", "fieldcraft_load_vite_production_assets", 100);
  * @param string $src    Script source URL
  * @return string Modified script tag
  */
-function fieldcraft_vite_script_module_type(
+function cvw_vite_script_module_type(
     string $tag,
     string $handle,
     string $src,
 ): string {
-    if (strpos($handle, "fieldcraft-vite-") !== 0) {
+    if (strpos($handle, "cvw-vite-") !== 0) {
         return $tag;
     }
 
@@ -182,4 +186,4 @@ function fieldcraft_vite_script_module_type(
 
     return str_replace("<script ", '<script type="module" ', $tag);
 }
-add_filter("script_loader_tag", "fieldcraft_vite_script_module_type", 10, 3);
+add_filter("script_loader_tag", "cvw_vite_script_module_type", 10, 3);

@@ -16,7 +16,7 @@ get_header(); ?>
                     <article class="card card-hover">
                         <?php if (has_post_thumbnail()): ?>
                             <div style="aspect-ratio: 16/10; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 1rem;">
-                                <?php the_post_thumbnail("clean-vite-wp-card", [
+                                <?php the_post_thumbnail("cvw-card", [
                                     "style" =>
                                         "width: 100%; height: 100%; object-fit: cover;",
                                 ]); ?>
@@ -42,10 +42,7 @@ get_header(); ?>
                             <?php esc_html_e(
                                 "Read more",
                                 "clean-vite-wp",
-                            ); ?> <?php echo clean_vite_wp_icon(
-     "arrow-right",
-     16,
- ); ?>
+                            ); ?> <?php echo cvw_icon("arrow-right", 16); ?>
                         </a>
                     </article>
                 <?php

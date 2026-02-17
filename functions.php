@@ -1,8 +1,8 @@
 <?php
 /**
- * Fieldcraft Digital 2.0 - Theme Functions
+ * Clean Vite WP - Theme Functions
  *
- * @package Fieldcraft
+ * @package Clean_Vite_WP
  */
 
 // Theme setup: menus, supports, and base assets
